@@ -23,6 +23,7 @@ namespace AES_Morgan
 
             while(opcion != 0)
             {
+                Console.Clear();
                 //Mostramos al usuario el menu de opciones
                 Console.WriteLine("************Cifrar o descifrar*********\n");
                 Console.WriteLine("Pulsa 1 para cifrar.");
@@ -51,21 +52,49 @@ namespace AES_Morgan
                         textoPlano = File.ReadAllText(fileName);
 
                         //Pedimos una contraseña 
-                        Console.WriteLine("Introduce la contraseña.");
+                        Console.WriteLine("\nIntroduce la contraseña.");
+
+
+                        password = null;
+                        ConsoleKeyInfo key;
+                        do
+                        {
+                            key = Console.ReadKey(true);
+
+                            // Backspace Should Not Work
+                            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                            {
+                                password += key.KeyChar;
+                                Console.Write("*");
+                            }
+                            else if (key.Key == ConsoleKey.Backspace)
+                            {
+                                Console.WriteLine("\b \b");
+
+                            }
+                        }
+                        while (key.Key != ConsoleKey.Enter);
+
+
 
                         //Leemos la contraseña
-                        password = Console.ReadLine();
+                        //password = Console.ReadLine();
+                        
 
                         //Llamamos a la funcion de encriptar
                         textoCifrado = Aes.Encrypt(textoPlano, password, salt);
 
                         File.WriteAllText(fileName, textoCifrado);
 
-                        Console.WriteLine("Documento cifrado y guardado.");
+                        Console.WriteLine("\nDocumento cifrado y guardado.");
+
+                        Console.ReadKey();
                     }
                     catch(Exception e)
                     {
-                        Console.WriteLine("Se a producido un error en el proceso de cifrado.");
+                        Console.WriteLine("\nSe a producido un error en el proceso de cifrado.");
+
+                        Console.ReadKey();
                     }
 
                 }
@@ -85,19 +114,49 @@ namespace AES_Morgan
                         //Leemos los datos del fichero y los ponemos en una variable
                         textoPlano = File.ReadAllText(fileName);
 
-                        Console.WriteLine("Introduce la contraseña.");
+                        Console.WriteLine("\nIntroduce la contraseña.");
 
-                        password = Console.ReadLine();
+
+
+                        password = null;
+                        ConsoleKeyInfo key;
+                        do
+                        {
+                            key = Console.ReadKey(true);
+
+                            // Backspace Should Not Work
+                            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                            {
+                                password += key.KeyChar;
+                                Console.Write("*");
+                            }
+                            else if (key.Key == ConsoleKey.Backspace)
+                            {
+                                Console.WriteLine("\b \b");
+
+                            }
+                        }
+                        while (key.Key != ConsoleKey.Enter);
+
+
+
+
+
+                        //password = Console.ReadLine();
 
                         textoDescifrado = Aes.Decrypt(textoPlano, password, salt);
 
                         File.WriteAllText(fileName, textoDescifrado);
 
-                        Console.WriteLine("Documento descidrado y guardado.");
+                        Console.WriteLine("\nDocumento descidrado y guardado.");
+
+                        Console.ReadKey();
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Se a producido un error en el proceso de descifrado.");
+                        Console.WriteLine("\nSe a producido un error en el proceso de descifrado.");
+
+                        Console.ReadKey();
                     }
                 }
             }
@@ -141,28 +200,6 @@ namespace AES_Morgan
             return Encoding.Unicode.GetString(datadecrypt);
         }
     }
+
 }
-
-/* public static string EntraPassword()
-        {
-            string password = null;
-            ConsoleKeyInfo key;
-            do
-            {
-                key = Console.ReadKey(true);
-
-                // Backspace Should Not Work
-                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                {
-                    password += key.KeyChar;
-                    Console.Write("*");
-                }
-                else if (key.Key == ConsoleKey.Backspace)
-                {
-                    Console.Write("\b \b");
-
-                }
-            }
-            while (key.Key != ConsoleKey.Enter);
-            return password;
 
