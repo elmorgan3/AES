@@ -23,6 +23,7 @@ namespace AES_Morgan
 
             while(opcion != 0)
             {
+                //Limpiamos la pantalla para que por cada vuelta vacie la consola
                 Console.Clear();
                 //Mostramos al usuario el menu de opciones
                 Console.WriteLine("************Cifrar o descifrar*********\n");
@@ -36,7 +37,7 @@ namespace AES_Morgan
 
                 if (opcion == 1)
                 {
-                    //Mostramos un pequeño texto para 
+                    //Mostramos un pequeño texto para ver que haremos 
                     Console.WriteLine("Cifrar\n");
 
                     //Pedimos el nombre del archivo, hay que poner la extension, en este caso es .txt
@@ -54,52 +55,34 @@ namespace AES_Morgan
                         //Pedimos una contraseña 
                         Console.WriteLine("\nIntroduce la contraseña.");
 
+                        //Llamos a un funcion para leer la contraseña y muestre * en vez de las letras
+                        password = EntraPassword();                     
 
-                        password = null;
-                        ConsoleKeyInfo key;
-                        do
-                        {
-                            key = Console.ReadKey(true);
-
-                            // Backspace Should Not Work
-                            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                            {
-                                password += key.KeyChar;
-                                Console.Write("*");
-                            }
-                            else if (key.Key == ConsoleKey.Backspace)
-                            {
-                                Console.WriteLine("\b \b");
-
-                            }
-                        }
-                        while (key.Key != ConsoleKey.Enter);
-
-
-
-                        //Leemos la contraseña
-                        //password = Console.ReadLine();
-                        
-
-                        //Llamamos a la funcion de encriptar
+                        //Llamamos a la funcion de encriptar y pasamos el texto la contraseña y el salt
                         textoCifrado = Aes.Encrypt(textoPlano, password, salt);
 
+                        //Guardamos el cifrado en el documento
                         File.WriteAllText(fileName, textoCifrado);
 
+                        //Decimos que se ha guardado
                         Console.WriteLine("\nDocumento cifrado y guardado.");
 
+                        //Hasta que no le den a una tecla no saldremos del bucle
                         Console.ReadKey();
                     }
                     catch(Exception e)
                     {
+                        //Decimos que ha habido un error en el proceso
                         Console.WriteLine("\nSe a producido un error en el proceso de cifrado.");
 
+                        //Hasta que no le den a una tecla no saldremos del bucle
                         Console.ReadKey();
                     }
 
                 }
                 else if (opcion == 2)
                 {
+                    //Mostramos un pequeño texto para ver que haremos 
                     Console.WriteLine("Descifrar\n");
 
                     //Pedimos el nombre del archivo, hay que poner la extension, en este caso es .txt
@@ -114,53 +97,60 @@ namespace AES_Morgan
                         //Leemos los datos del fichero y los ponemos en una variable
                         textoPlano = File.ReadAllText(fileName);
 
+                        //Pedimos una contraseña 
                         Console.WriteLine("\nIntroduce la contraseña.");
 
+                        //Llamo a la funcion para leer la contraseña y que muestre *
+                        password = EntraPassword();
 
-
-                        password = null;
-                        ConsoleKeyInfo key;
-                        do
-                        {
-                            key = Console.ReadKey(true);
-
-                            // Backspace Should Not Work
-                            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                            {
-                                password += key.KeyChar;
-                                Console.Write("*");
-                            }
-                            else if (key.Key == ConsoleKey.Backspace)
-                            {
-                                Console.WriteLine("\b \b");
-
-                            }
-                        }
-                        while (key.Key != ConsoleKey.Enter);
-
-
-
-
-
-                        //password = Console.ReadLine();
-
+                        //Llamamos a la funcion de desencriptar y pasamos el texto la contraseña y el salt
                         textoDescifrado = Aes.Decrypt(textoPlano, password, salt);
 
+                        //Guardamos el cifrado en el documento
                         File.WriteAllText(fileName, textoDescifrado);
 
+                        //Decimos que se ha guardado
                         Console.WriteLine("\nDocumento descidrado y guardado.");
 
+                        //Hasta que no le den a una tecla no saldremos del bucle
                         Console.ReadKey();
                     }
                     catch (Exception e)
                     {
+                        //Decimos que ha habido un error en el proceso
                         Console.WriteLine("\nSe a producido un error en el proceso de descifrado.");
 
+                        //Hasta que no le den a una tecla no saldremos del bucle
                         Console.ReadKey();
                     }
                 }
             }
             
+        }
+
+        //Funcion para leer un texto y mostrar en su logar *
+        public static string EntraPassword()
+        {
+            string password = null;
+            ConsoleKeyInfo key;
+            do
+            {
+                key = Console.ReadKey(true);
+
+                // Backspace Should Not Work
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*");
+                }
+                else if (key.Key == ConsoleKey.Backspace)
+                {
+                    Console.Write("\b \b");
+
+                }
+            }
+            while (key.Key != ConsoleKey.Enter);
+            return password;
         }
 
     }
@@ -200,6 +190,8 @@ namespace AES_Morgan
             return Encoding.Unicode.GetString(datadecrypt);
         }
     }
+    
+
 
 }
 
