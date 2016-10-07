@@ -1,0 +1,6 @@
+C:\Users\Morgan\Desktop\C#\AES Morgan\AES Morgan\bin\Debug\AES Morgan.exe.config
+C:\Users\Morgan\Desktop\C#\AES Morgan\AES Morgan\bin\Debug\AES Morgan.exe
+C:\Users\Morgan\Desktop\C#\AES Morgan\AES Morgan\bin\Debug\AES Morgan.pdb
+C:\Users\Morgan\Desktop\C#\AES Morgan\AES Morgan\obj\Debug\AES Morgan.csprojResolveAssemblyReference.cache
+C:\Users\Morgan\Desktop\C#\AES Morgan\AES Morgan\obj\Debug\AES Morgan.exe
+C:\Users\Morgan\Desktop\C#\AES Morgan\AES Morgan\obj\Debug\AES Morgan.pdb
