@@ -20,8 +20,8 @@ namespace AES_Morgan
             string textoCifrado;
             string textoDescifrado;
             const string salt = "salt";
-
-            while(opcion != 0)
+            Console.WriteLine("************Hola*********\n");
+            while (opcion != 0)
             {
                 //Limpiamos la pantalla para que por cada vuelta vacie la consola
                 Console.Clear();
